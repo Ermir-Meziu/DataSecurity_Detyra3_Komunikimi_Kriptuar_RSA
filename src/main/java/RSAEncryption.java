@@ -20,4 +20,11 @@ public class RSAEncryption {
         byte[] encryptedBytes = cipher.doFinal(message.getBytes());
         return java.util.Base64.getEncoder().encodeToString(encryptedBytes);
     }
+
+    public String decrypt(String encryptedMessage) throws Exception {
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
+        byte[] decryptedBytes = cipher.doFinal(java.util.Base64.getDecoder().decode(encryptedMessage));
+        return new String(decryptedBytes);
+    }
 }
