@@ -25,5 +25,30 @@ public class ChatClient {
         username = scanner.nextLine();
         out.writeObject(username);
         out.writeObject(rsa.getPublicKey());
+
+        new Thread(() -> {
+            try {
+                while (true) {
+                    Object response = in.readObject();
+                    if (response instanceof HashMap) {
+                        publicKeys = (HashMap<String, PublicKey>) response;
+                        System.out.println("🔄 Public Keys Updated: " + publicKeys.keySet());
+                    } else {
+                        String encryptedMessage = (String) response;
+                        String sender = encryptedMessage.split(": ")[0];
+                        String message = encryptedMessage.split(": ")[1];
+
+                        try {
+                            String decryptedMessage = rsa.decrypt(message);
+                            System.out.println(sender + " (Decrypted): " + decryptedMessage);
+                        } catch (Exception e) {
+                            System.out.println(sender + " (Encrypted): " + message);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }
