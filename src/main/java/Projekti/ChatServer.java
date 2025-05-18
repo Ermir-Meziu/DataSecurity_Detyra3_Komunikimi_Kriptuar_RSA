@@ -1,6 +1,9 @@
+package Projekti;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.PublicKey;
 import java.util.HashMap;
@@ -11,7 +14,13 @@ public class ChatServer {
     private static HashMap<String, PublicKey>  publicKeys = new HashMap<>();
 
     public static void main(String[] args) throws IOException{
+        ServerSocket serverSocket = new ServerSocket(PORT);
+        System.out.println("🔌 Server is running...");
 
+        while (true) {
+            Socket clientSocket = serverSocket.accept();
+            new ClientHandler(clientSocket).start();
+        }
     }
 
     static class ClientHandler extends Thread {

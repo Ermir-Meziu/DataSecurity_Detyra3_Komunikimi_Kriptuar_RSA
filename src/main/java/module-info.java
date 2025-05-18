@@ -5,4 +5,7 @@ module com.example.datasecurity_detyra3_komunikimi_kriptuar_rsa {
 
     opens com.example.datasecurity_detyra3_komunikimi_kriptuar_rsa to javafx.fxml;
     exports com.example.datasecurity_detyra3_komunikimi_kriptuar_rsa;
+
+    opens Projekti to javafx.fxml;
+    exports Projekti;
 }
