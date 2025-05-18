@@ -9,4 +9,8 @@ public class RSAEncryption {
         keyGen.initialize(2048);
         keyPair = keyGen.generateKeyPair();
     }
+
+    public PublicKey getPublicKey() {
+        return keyPair.getPublic();
+    }
 }
